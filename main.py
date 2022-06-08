@@ -1,1 +1,41 @@
-#ola
+import random
+
+class Individuo:
+    def __init__(self, arreglo):
+        self.arreglo = arreglo
+        self.fitness = self.funcionFitness()
+    
+    def funcionFitness(self):
+        x = int(''.join([str(i) for i in self.arreglo[0:5]]), 2)
+        y = int(''.join([str(i) for i in self.arreglo[5:10]]), 2)
+        return x*x*y - x*y*y
+    
+    def mutar(self):
+        for i in range(10):
+            if random.random() < 0.01:
+                if self.arreglo[i] == 1:
+                    self.arreglo[i] = 0
+                else:
+                    self.arreglo[i] = 1
+        self.fitness = self.funcionFitness(self.arreglo)
+
+def generarPoblacion(n):
+    ind = []
+    for i in range(n):
+        a = random.randint(0,31)
+        b = random.randint(0,31)
+        a = bin(a)[2:] # a=0  -> 0
+        b = bin(b)[2:]
+        while (len(a) < 5):
+            a = '0' + a
+        while (len(b) < 5):
+            b = '0' + b
+        ind.append(Individuo(a+b))
+    return ind
+
+x = generarPoblacion(10)
+
+# x = Individuo([1,1,0,1,0,0,0,0,0,1])
+
+print([i.arreglo for i in x])
+print([i.fitness for i in x])
