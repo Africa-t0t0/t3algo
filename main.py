@@ -8,24 +8,35 @@ class Individuo:
     def funcionFitness(self):
         x = int(self.arreglo[0:5], 2)
         y = int(self.arreglo[5:10], 2)
-        if y > x:
-            return 1
+        #if y > x:
+        #    return 1
         return x*x*y - x*y*y
     
     def mutar(self):
         for i in range(10):
-            if random.random() < 0.01:
+            a = random.random()
+            if a < 0.3:
                 if self.arreglo[i] == 1:
-                    self.arreglo[i] = 0
+                    self.arreglo = self.arreglo[0:i] + '0' + self.arreglo[i+1:10]
                 else:
-                    self.arreglo[i] = 1
-        self.fitness = self.funcionFitness(self.arreglo)
+                    self.arreglo = self.arreglo[0:i] + '1' + self.arreglo[i+1:10]
+        self.fitness = self.funcionFitness()
 
 def ruleta(arr):
     total = 0
     for i in range(0, len(arr)):
         total += arr[i].fitness
     return random.choices(arr, weights=[i.fitness/total for i in arr], k = 2)
+
+def torneo(arr):
+    list = [random.choice(arr), random.choice(arr), random.choice(arr)]
+    max = min([x.fitness for x in list])
+    aux = ''
+    for i in range(len(list)):
+        if list[i].fitness >= max:
+            max = list[i].fitness
+            aux = list[i]
+    return aux
 
 def cruce(ind1, ind2):
     aux = [random.randint(0,1) for i in range(0, 10)]
@@ -62,23 +73,21 @@ def max_fitness(arr):
     return max, arr[i].arreglo
 
 def main():
-    pobla = generarPoblacion(100)
-    aux = []
+    pobla = generarPoblacion(10)
     gen = 0
-    while True:
-        for i in range(0,50):
-            a,b = ruleta(pobla)
+    while gen < 10:
+        aux = []
+        for i in range(0,5):
+            a = torneo(pobla)
+            b = torneo(pobla)
             x,y = cruce(a,b)
-            x.mutar
-            y.mutar
+            x.mutar()
+            y.mutar()
             aux.append(x)
             aux.append(y)
         pobla = aux
-        print('gen: ', gen, 'max: ', max_fitness(pobla)[0])
-        if gen == 100:
-            break
+        print('gen: ', gen, 'max: ', max_fitness(aux)[0])
         gen+=1
-        aux = []
     print('final: ', max_fitness(pobla))
 
 main()
