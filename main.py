@@ -14,9 +14,8 @@ class Individuo:
     
     def mutar(self):
         for i in range(10):
-            a = random.random()
-            if a < 0.3:
-                if self.arreglo[i] == 1:
+            if random.random() < 0.1:
+                if self.arreglo[i] == '1':
                     self.arreglo = self.arreglo[0:i] + '0' + self.arreglo[i+1:10]
                 else:
                     self.arreglo = self.arreglo[0:i] + '1' + self.arreglo[i+1:10]
@@ -28,8 +27,10 @@ def ruleta(arr):
         total += arr[i].fitness
     return random.choices(arr, weights=[i.fitness/total for i in arr], k = 2)
 
-def torneo(arr):
-    list = [random.choice(arr), random.choice(arr), random.choice(arr)]
+def torneo(arr, n):
+    list = []
+    for i in range(n):
+        list.append(random.choice(arr))
     max = min([x.fitness for x in list])
     aux = ''
     for i in range(len(list)):
@@ -75,11 +76,11 @@ def max_fitness(arr):
 def main():
     pobla = generarPoblacion(10)
     gen = 0
-    while gen < 10:
+    while gen < 30:
         aux = []
         for i in range(0,5):
-            a = torneo(pobla)
-            b = torneo(pobla)
+            a = torneo(pobla, 4)
+            b = torneo(pobla, 4)
             x,y = cruce(a,b)
             x.mutar()
             y.mutar()
