@@ -27,7 +27,7 @@ def ruleta(arr):
         total += arr[i].fitness
     return random.choices(arr, weights=[i.fitness/total for i in arr], k = 2)
 
-def torneo(arr, n):
+def torneo(arr, n=3):
     list = []
     for i in range(n):
         list.append(random.choice(arr))
@@ -79,8 +79,8 @@ def main():
     while gen < 30:
         aux = []
         for i in range(0,5):
-            a = torneo(pobla, 4)
-            b = torneo(pobla, 4)
+            a = torneo(pobla, 3)
+            b = torneo(pobla, 3)
             x,y = cruce(a,b)
             x.mutar()
             y.mutar()
