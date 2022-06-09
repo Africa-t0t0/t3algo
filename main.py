@@ -33,11 +33,11 @@ def cruce(ind1, ind2):
     h2 = ''
     for i in range(0,len(aux)):
         if aux[i] == 1:
-            h1 = h1+((ind1.arreglo[i]))
-            h2 = h2+((ind2.arreglo[i]))
-        else:
             h1 = h1+((ind2.arreglo[i]))
             h2 = h2+((ind1.arreglo[i]))
+        else:
+            h1 = h1+((ind1.arreglo[i]))
+            h2 = h2+((ind2.arreglo[i]))
     return Individuo(h1), Individuo(h2)
 
 def generarPoblacion(n):
@@ -66,7 +66,7 @@ def main():
     aux = []
     gen = 0
     while True:
-        for i in range(0,50):
+        for i in range(0,100):
             a,b = ruleta(pobla)
             x,y = cruce(a,b)
             x.mutar
