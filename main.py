@@ -24,7 +24,7 @@ def generarPoblacion(n):
     for i in range(n):
         a = random.randint(0,31)
         b = random.randint(0,31)
-        a = bin(a)[2:] # a=0  -> 0
+        a = bin(a)[2:] 
         b = bin(b)[2:]
         while (len(a) < 5):
             a = '0' + a
@@ -34,8 +34,6 @@ def generarPoblacion(n):
     return ind
 
 x = generarPoblacion(10)
-
-# x = Individuo([1,1,0,1,0,0,0,0,0,1])
 
 print([i.arreglo for i in x])
 print([i.fitness for i in x])
