@@ -66,7 +66,7 @@ def main():
     aux = []
     gen = 0
     while True:
-        for i in range(0,100):
+        for i in range(0,50):
             a,b = ruleta(pobla)
             x,y = cruce(a,b)
             x.mutar
