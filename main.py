@@ -6,8 +6,8 @@ class Individuo:
         self.fitness = self.funcionFitness()
     
     def funcionFitness(self):
-        x = int(self.arreglo[0:5]), 2)
-        y = int(self.arreglo[5:10]), 2)
+        x = int(self.arreglo[0:5], 2)
+        y = int(self.arreglo[5:10], 2)
         return x*x*y - x*y*y
     
     def mutar(self):
