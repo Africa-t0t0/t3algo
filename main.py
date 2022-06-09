@@ -28,7 +28,17 @@ def ruleta(arr):
     return random.choices(arr, weights=[i.fitness/total for i in arr], k = 2)
 
 def cruce(ind1, ind2):
-    pass
+    aux = [random.randint(0,1) for i in range(0, 10)]
+    h1 = ''
+    h2 = ''
+    for i in range(0,len(aux)):
+        if aux[i] == 1:
+            h1 = h1+((ind1.arreglo[i]))
+            h2 = h2+((ind2.arreglo[i]))
+        else:
+            h1 = h1+((ind2.arreglo[i]))
+            h2 = h2+((ind1.arreglo[i]))
+    return Individuo(h1), Individuo(h2)
 
 def generarPoblacion(n):
     ind = []
@@ -44,6 +54,31 @@ def generarPoblacion(n):
         ind.append(Individuo(a+b))
     return ind
 
-x,y = ruleta(generarPoblacion(100))
+def max_fitness(arr):
+    max = 0
+    for i in range(len(arr)):
+        if arr[i].fitness > max:
+            max = arr[i].fitness
+    return max, arr[i].arreglo
 
-print(x.fitness, y.fitness)
+def main():
+    pobla = generarPoblacion(100)
+    aux = []
+    gen = 0
+    while True:
+        for i in range(0,50):
+            a,b = ruleta(pobla)
+            x,y = cruce(a,b)
+            x.mutar
+            y.mutar
+            aux.append(x)
+            aux.append(y)
+        pobla = aux
+        print('gen: ', gen, 'max: ', max_fitness(pobla)[0])
+        if gen == 100:
+            break
+        gen+=1
+        aux = []
+    print('final: ', max_fitness(pobla))
+
+main()
