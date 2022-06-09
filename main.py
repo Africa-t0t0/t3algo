@@ -8,6 +8,8 @@ class Individuo:
     def funcionFitness(self):
         x = int(self.arreglo[0:5], 2)
         y = int(self.arreglo[5:10], 2)
+        if y > x:
+            return 1
         return x*x*y - x*y*y
     
     def mutar(self):
@@ -25,6 +27,9 @@ def ruleta(arr):
         total += arr[i].fitness
     return random.choices(arr, weights=[i.fitness/total for i in arr], k = 2)
 
+def cruce(ind1, ind2):
+    pass
+
 def generarPoblacion(n):
     ind = []
     for i in range(n):
@@ -39,9 +44,6 @@ def generarPoblacion(n):
         ind.append(Individuo(a+b))
     return ind
 
-x,y = ruleta(generarPoblacion(10))
-
-# print([i.arreglo for i in x])
-# print([i.fitness for i in x])
+x,y = ruleta(generarPoblacion(100))
 
 print(x.fitness, y.fitness)
