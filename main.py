@@ -19,6 +19,12 @@ class Individuo:
                     self.arreglo[i] = 1
         self.fitness = self.funcionFitness(self.arreglo)
 
+def ruleta(arr):
+    total = 0
+    for i in range(0, len(arr)):
+        total += arr[i].fitness
+    return random.choices(arr, weights=[i.fitness/total for i in arr], k = 2)
+
 def generarPoblacion(n):
     ind = []
     for i in range(n):
@@ -33,7 +39,9 @@ def generarPoblacion(n):
         ind.append(Individuo(a+b))
     return ind
 
-x = generarPoblacion(10)
+x,y = ruleta(generarPoblacion(10))
 
-print([i.arreglo for i in x])
-print([i.fitness for i in x])
+# print([i.arreglo for i in x])
+# print([i.fitness for i in x])
+
+print(x.fitness, y.fitness)
