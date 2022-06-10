@@ -1,5 +1,5 @@
 import random
-
+from tabulate import tabulate
 class Individuo:
     def __init__(self, arreglo):
         self.arreglo = arreglo
@@ -8,8 +8,6 @@ class Individuo:
     def funcionFitness(self):
         x = int(self.arreglo[0:5], 2)
         y = int(self.arreglo[5:10], 2)
-        #if y > x:
-        #    return 1
         return x*x*y - x*y*y
     
     def mutar(self):
@@ -74,11 +72,13 @@ def max_fitness(arr):
     return max, arr[i].arreglo
 
 def main():
-    pobla = generarPoblacion(10)
+    n = 4
+    tab = []
+    pobla = generarPoblacion(n)
     gen = 0
-    while gen < 30:
+    while gen < 100:
         aux = []
-        for i in range(0,5):
+        for i in range(0,int(n/2)):
             a = torneo(pobla, 3)
             b = torneo(pobla, 3)
             x,y = cruce(a,b)
@@ -87,8 +87,10 @@ def main():
             aux.append(x)
             aux.append(y)
         pobla = aux
-        print('gen: ', gen, 'max: ', max_fitness(aux)[0])
+        x = ['Generación: ', gen+1, ' Max: ', max_fitness(aux)[0]]
+        tab.append(x)
         gen+=1
+    print(tab)
     print('final: ', max_fitness(pobla))
 
 main()
