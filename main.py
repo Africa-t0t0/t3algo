@@ -1,5 +1,4 @@
 import random
-from tabulate import tabulate
 class Individuo:
     def __init__(self, arreglo):
         self.arreglo = arreglo
@@ -12,18 +11,18 @@ class Individuo:
     
     def mutar(self):
         for i in range(10):
-            if random.random() < 0.1:
+            if random.random() < 0.08:
                 if self.arreglo[i] == '1':
                     self.arreglo = self.arreglo[0:i] + '0' + self.arreglo[i+1:10]
                 else:
                     self.arreglo = self.arreglo[0:i] + '1' + self.arreglo[i+1:10]
         self.fitness = self.funcionFitness()
 
-def ruleta(arr):
-    total = 0
-    for i in range(0, len(arr)):
-        total += arr[i].fitness
-    return random.choices(arr, weights=[i.fitness/total for i in arr], k = 2)
+#def ruleta(arr):
+#    total = 0
+#    for i in range(0, len(arr)):
+#        total += arr[i].fitness
+#    return random.choices(arr, weights=[i.fitness/total for i in arr], k = 2)
 
 def torneo(arr, n=3):
     list = []
@@ -65,15 +64,16 @@ def generarPoblacion(n):
     return ind
 
 def max_fitness(arr):
-    max = 0
+    max = min([x.fitness for x in arr])
+    aux = ''
     for i in range(len(arr)):
         if arr[i].fitness > max:
             max = arr[i].fitness
-    return max, arr[i].arreglo
+            aux = arr[i]
+    return max, aux.arreglo
 
 def main():
-    n = 4
-    tab = []
+    n = 50 #4,8,16,32,50
     pobla = generarPoblacion(n)
     gen = 0
     while gen < 100:
@@ -87,10 +87,10 @@ def main():
             aux.append(x)
             aux.append(y)
         pobla = aux
-        x = ['Generación: ', gen+1, ' Max: ', max_fitness(aux)[0]]
-        tab.append(x)
+        max_bin = max_fitness(aux)[1]
+        max_par = '('+str(int(max_bin[:len(max_bin)//2],2))+','+str(int(max_bin[len(max_bin)//2:],2))+')'
+        print('Generación: ', gen+1, ' Max: ', max_fitness(aux)[0], ' Par: ', max_par)
         gen+=1
-    print(tab)
     print('final: ', max_fitness(pobla))
 
 main()
